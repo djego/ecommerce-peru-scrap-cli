@@ -3,8 +3,12 @@ List of products of ecommerce websites
 
 ## Usage
 
-## Development
+## Development
 
+### Local
+Install dependencies:
+> pip install -r requirements.txt 
 
-###To-do
-- Add more stores 
+## To-do
+* Add more ecommerces
+* Add API services
