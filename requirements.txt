@@ -4,3 +4,4 @@ lxml==4.5.2
 six==1.15.0
 soupsieve==2.0.1
 webencodings==0.5.1
+Flask==1.1.2

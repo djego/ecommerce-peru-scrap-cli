@@ -63,11 +63,11 @@ class Scraper:
         return lst_result
 
     #TODO este metodo no corresponde a la naturaleza de la clase
-    def export(self, data, format="csv", filename="data"):
+    def export(self, data, format="csv", filename="out"):
 
         all_formats = ["csv","json"]
         filename_path = os.getcwd() + "/out/"+filename+"."+format
-
+        #FIXME go to class in fhe future
         if not os.path.exists(os.path.dirname(filename_path)):
             try:
                 os.makedirs(os.path.dirname(filename_path))

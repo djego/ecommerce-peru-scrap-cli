@@ -1,7 +1,7 @@
-# Products of e-commerce API
+# Products list API
 > From Scraping to API
 
-A list of products from e-commerce websites more popular of peru
+A list of products from some e-commerce websites more popular of Perú
 
 
 ## Features
@@ -15,11 +15,14 @@ First install (Python3.7 o later)
 
 ` pip install -r requirements.txt `
 
-For scraping use CLI 
+For data scraping use CLI more info:
 
-`python cli.py -o filename`
+`python cli.py -h`
 
 
 ## To-do
-* Add more ecommerces
-* Add API services
+* (Scraping) Add more ecommerces websites
+* (Scraping) paginate support 
+* (API) Category support
+* API Public deploy
+* Tests
