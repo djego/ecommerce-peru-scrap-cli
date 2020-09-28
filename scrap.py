@@ -1,5 +1,6 @@
 import csv
 import json
+import os
 import requests
 from bs4 import BeautifulSoup
 from decimal import Decimal
@@ -65,14 +66,22 @@ class Scraper:
     def export(self, data, format="csv", filename="data"):
 
         all_formats = ["csv","json"]
+        filename_path = os.getcwd() + "/out/"+filename+"."+format
 
+        if not os.path.exists(os.path.dirname(filename_path)):
+            try:
+                os.makedirs(os.path.dirname(filename_path))
+            except OSError as exc: # Guard against race condition
+                if exc.errno != errno.EEXIST:
+                    raise
+        
         if format in all_formats:
             if format == "csv":
                 keys = data[0].keys()
-                with open(filename+".csv", "w", newline="") as f:
+                with open(filename_path, "w", newline="") as f:
                     dict_writer = csv.DictWriter(f, keys)
                     dict_writer.writeheader()
                     dict_writer.writerows(data)
             if format == "json":
-                with open(filename+".json", 'w') as outfile:
+                with open(filename_path, 'w') as outfile:
                     json.dump(data, outfile)
