@@ -63,9 +63,16 @@ class Scraper:
 
     #TODO este metodo no corresponde a la naturaleza de la clase
     def export(self, data, format="csv", filename="data"):
-        keys = data[0].keys()
-        with open(filename+".csv", "w", newline="") as f:
-            dict_writer = csv.DictWriter(f, keys)
-            dict_writer.writeheader()
-            dict_writer.writerows(data)
-    
+
+        all_formats = ["csv","json"]
+
+        if format in all_formats:
+            if format == "csv":
+                keys = data[0].keys()
+                with open(filename+".csv", "w", newline="") as f:
+                    dict_writer = csv.DictWriter(f, keys)
+                    dict_writer.writeheader()
+                    dict_writer.writerows(data)
+            if format == "json":
+                with open(filename+".json", 'w') as outfile:
+                    json.dump(data, outfile)
