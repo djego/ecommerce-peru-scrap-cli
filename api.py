@@ -10,4 +10,4 @@ def get_products():
 
 @app.route('/')
 def hi():
-    return 'Welcome to API Products!'
+    return {"message": "Welcome to API Products"}

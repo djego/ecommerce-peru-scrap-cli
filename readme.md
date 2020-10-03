@@ -9,7 +9,7 @@ A list of products from some e-commerce websites more popular of Perú
 - Products export data in csv
 - API services (comming soon)
 
-## Usage
+## Development usage
 
 First install (Python3.7 o later)
 
@@ -19,10 +19,18 @@ For data scraping use CLI more info:
 
 `python cli.py -h`
 
+For run server app
 
-## To-do
+```
+export FLASK_APP=api.py
+export FLASK_ENV=development
+python -m flask run 
+```
+
+## TO-DO
 * (Scraping) Add more ecommerces websites
 * (Scraping) paginate support 
-* (API) Category support
+* (Scraping+API) Category support
 * API Public deploy
+* Persistence in DB
 * Tests
