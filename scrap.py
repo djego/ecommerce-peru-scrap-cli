@@ -21,6 +21,12 @@ class Scraper:
                 "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat40712/Laptops",
                 "ripley": "https://simple.ripley.com.pe/tecnologia/computadoras/laptops",
                 "oechsle": "https://www.oechsle.pe/tecnologia/computo/laptops",
+            },
+            "celular": {
+                "linio": "https://www.linio.com.pe/c/celulares-y-tablets/celulares-y-smartphones",
+                "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat760706/Celulares-y-Smartphones",
+                "ripley": "https://simple.ripley.com.pe/tecnologia/celulares/ver-todo-celulares",
+                "oechsle": "https://www.oechsle.pe/tecnologia/telefonia/celulares",
             }
         }  
 
@@ -40,7 +46,12 @@ class Scraper:
         req = requests.get(self.all_resources[self.category]["falabella"])
         soup = BeautifulSoup(req.text, "lxml")
         lst_result = []
-        for item in soup.find("div",{"id": "testId-searchResults-products"}).find_all("div",{"class": "search-results-list"}):
+        if self.category == 'celular':
+            items = soup.find("div",{"id": "testId-searchResults-products"}).find_all("div",{"class": "search-results-4-grid"})
+
+        else:
+            items = soup.find("div",{"id": "testId-searchResults-products"}).find_all("div",{"class": "search-results-list"})
+        for item in items:
             link  = item.find("a").get('href')
             title = item.find("b",{"class": "pod-subTitle"}).text
             price = item.find("ol",{"class":"fa--prices"}).find("li",{"class": "price-0"}).get("data-undefined-price")
@@ -53,21 +64,36 @@ class Scraper:
         soup = BeautifulSoup(req.text, "lxml")
 
         lst_result = []
-        items = soup.find("div",{"id": "catalog-page"}).find_all("div",{"class": "ProductItem"})
-        for item in items:
-            title = item.find("a",{"class":"ProductItem__Name"}).text
-            link  = item.find("a",{"class":"ProductItem__Name"}).get("href")
-            price_el = item.find("li",{"class": "catalog-prices__offer-price"})
-            
-            price2_el  = item.find("li",{"class": "catalog-prices__list-price"})
-            price = price_el.text if price_el != None else None
-            if price == '':
-                price = price2_el.text if price2_el != None else None
-            
-            price_formated = price_to_float(price)
-            link_trans = 'https://simple.ripley.com.pe'+link
-            lst_result.append({"title":title, "price": price_formated, "link": link_trans})
-        return lst_result
+        if self.category == 'celular':
+            items = soup.find("div",{"class": "catalog-container"}).find_all("a",{"class": "catalog-product-item"})
+            for item in items:
+                title = item.find("div",{"class": "catalog-product-details__name"}).text
+                link =  item.get("href")
+                price_el = item.find("li",{"class": "catalog-prices__offer-price"})
+                price2_el  = item.find("li",{"class": "catalog-prices__list-price"})
+                price = price_el.text if price_el != None else None
+                if price == '':
+                    price = price2_el.text if price2_el != None else None
+                
+                price_formated = price_to_float(price)
+                link_trans = 'https://simple.ripley.com.pe'+link
+                lst_result.append({"title":title, "price": price_formated, "link": link_trans})
+            return lst_result
+        else:
+            items = soup.find("div",{"id": "catalog-page"}).find_all("div",{"class": "ProductItem"})
+            for item in items:
+                title = item.find("a",{"class":"ProductItem__Name"}).text
+                link  = item.find("a",{"class":"ProductItem__Name"}).get("href")
+                price_el = item.find("li",{"class": "catalog-prices__offer-price"})
+                price2_el  = item.find("li",{"class": "catalog-prices__list-price"})
+                price = price_el.text if price_el != None else None
+                if price == '':
+                    price = price2_el.text if price2_el != None else None
+                
+                price_formated = price_to_float(price)
+                link_trans = 'https://simple.ripley.com.pe'+link
+                lst_result.append({"title":title, "price": price_formated, "link": link_trans})
+            return lst_result
 
     def oc(self):
         req = requests.get(self.all_resources[self.category]["oechsle"])

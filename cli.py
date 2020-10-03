@@ -11,6 +11,6 @@ ap.add_argument("-f", "--format", required=False,
 args = vars(ap.parse_args())
 
 scrap = Scraper("laptop")
-total = scrap.fb() + scrap.ln() + scrap.rp() + scrap.oc()
 
+total = scrap.fb() + scrap.ln() + scrap.rp() + scrap.oc()
 exp = scrap.export(total, filename=args['output'], format=args['format'])
