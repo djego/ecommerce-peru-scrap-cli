@@ -9,12 +9,23 @@ from utils import *
 
 lst_result = [] 
 
-class Scraper: 
-    def __init__(self):
-        pass
+class Scraper:
+    
+
+
+    def __init__(self, category):
+        self.category = category
+        self.all_resources = {
+            "laptop": {
+                "linio": "https://www.linio.com.pe/c/portatiles/laptops",
+                "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat40712/Laptops",
+                "ripley": "https://simple.ripley.com.pe/tecnologia/computadoras/laptops",
+                "oechsle": "https://www.oechsle.pe/tecnologia/computo/laptops",
+            }
+        }  
+
     def ln(self): 
-        ## Linio
-        req = requests.get('https://www.linio.com.pe/c/portatiles/laptops?price=1000-37539')
+        req = requests.get(self.all_resources[self.category]["linio"])
         soup = BeautifulSoup(req.text, "lxml")
         lst_result = []
         for item in soup.find_all("div",{"class": "catalogue-product"}):
@@ -22,27 +33,23 @@ class Scraper:
             link  = item.find("a").get('href')
             price = item.find("a").find("div",{'class':'price-section'}).find("meta",{"itemprop":"price"}).get("content")
             link_trans = 'https://linio.com.pe'+link
-            # price_formated = price
             price_formated = price_to_float(price)
             lst_result.append({"title":title, "price": price_formated, "link": link_trans})
         return lst_result
     def fb(self):
-        ## Falabella
-        req = requests.get('https://www.falabella.com.pe/falabella-pe/category/cat40712/Laptops')
+        req = requests.get(self.all_resources[self.category]["falabella"])
         soup = BeautifulSoup(req.text, "lxml")
         lst_result = []
         for item in soup.find("div",{"id": "testId-searchResults-products"}).find_all("div",{"class": "search-results-list"}):
             link  = item.find("a").get('href')
             title = item.find("b",{"class": "pod-subTitle"}).text
             price = item.find("ol",{"class":"fa--prices"}).find("li",{"class": "price-0"}).get("data-undefined-price")
-            # price_formated = price
             price_formated = price_to_float(price)
             lst_result.append({"title":title, "price": price_formated, "link": link})
         return lst_result
 
     def rp(self):
-        ## Ripley 
-        req = requests.get('https://simple.ripley.com.pe/tecnologia/computadoras/laptops')
+        req = requests.get(self.all_resources[self.category]["ripley"])
         soup = BeautifulSoup(req.text, "lxml")
 
         lst_result = []
@@ -62,10 +69,23 @@ class Scraper:
             lst_result.append({"title":title, "price": price_formated, "link": link_trans})
         return lst_result
 
+    def oc(self):
+        req = requests.get(self.all_resources[self.category]["oechsle"])
+        soup = BeautifulSoup(req.text, "lxml")
+        lst_result = []    
+        items = soup.find("div", {"class":"vitrina"}).find_all("div",{"class": "product"})
+        for item in items:
+            title = item.get("data-name")
+            link = item.get("data-link")
+            price = item.get("data-product-price")
+            price_formated = price_to_float(price)
+            lst_result.append({"title":title, "price": price_formated, "link": link})
+        return lst_result
+    
     #TODO este metodo no corresponde a la naturaleza de la clase
     def export(self, data, format="csv", filename="out"):
 
-        all_formats = ["csv","json"]
+        all_formats = ("csv","json")
         filename_path = os.getcwd() + "/out/"+filename+"."+format
         #FIXME go to class in fhe future
         if not os.path.exists(os.path.dirname(filename_path)):
@@ -85,3 +105,5 @@ class Scraper:
             if format == "json":
                 with open(filename_path, 'w') as outfile:
                     json.dump(data, outfile)
+
+        print("Exported: %s items" % str(len(data)))
