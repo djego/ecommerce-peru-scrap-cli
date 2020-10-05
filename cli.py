@@ -1,5 +1,6 @@
 import argparse
 from scrap import Scraper
+from utils import export_to
 
 ap = argparse.ArgumentParser(prog='cli-export',
                               usage='%(prog)s [options] path',)
@@ -11,6 +12,5 @@ ap.add_argument("-f", "--format", required=False,
 args = vars(ap.parse_args())
 
 scrap = Scraper("laptop")
-
-total = scrap.fb() + scrap.ln() + scrap.rp() + scrap.oc()
-exp = scrap.export(total, filename=args['output'], format=args['format'])
+all_products = scrap.all_ecommerce()
+exp = export_to(all_products, filename=args['output'], format=args['format'])

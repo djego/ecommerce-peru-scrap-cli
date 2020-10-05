@@ -1,6 +1,4 @@
-import csv
 import json
-import os
 import requests
 from bs4 import BeautifulSoup
 from decimal import Decimal
@@ -11,8 +9,6 @@ lst_result = []
 
 class Scraper:
     
-
-
     def __init__(self, category):
         self.category = category
         self.all_resources = {
@@ -48,7 +44,6 @@ class Scraper:
         lst_result = []
         if self.category == 'celular':
             items = soup.find("div",{"id": "testId-searchResults-products"}).find_all("div",{"class": "search-results-4-grid"})
-
         else:
             items = soup.find("div",{"id": "testId-searchResults-products"}).find_all("div",{"class": "search-results-list"})
         for item in items:
@@ -74,11 +69,10 @@ class Scraper:
                 price = price_el.text if price_el != None else None
                 if price == '':
                     price = price2_el.text if price2_el != None else None
-                
                 price_formated = price_to_float(price)
                 link_trans = 'https://simple.ripley.com.pe'+link
                 lst_result.append({"title":title, "price": price_formated, "link": link_trans})
-            return lst_result
+
         else:
             items = soup.find("div",{"id": "catalog-page"}).find_all("div",{"class": "ProductItem"})
             for item in items:
@@ -93,7 +87,7 @@ class Scraper:
                 price_formated = price_to_float(price)
                 link_trans = 'https://simple.ripley.com.pe'+link
                 lst_result.append({"title":title, "price": price_formated, "link": link_trans})
-            return lst_result
+        return lst_result
 
     def oc(self):
         req = requests.get(self.all_resources[self.category]["oechsle"])
@@ -108,28 +102,6 @@ class Scraper:
             lst_result.append({"title":title, "price": price_formated, "link": link})
         return lst_result
     
-    #TODO este metodo no corresponde a la naturaleza de la clase
-    def export(self, data, format="csv", filename="out"):
+    def all_ecommerce(self):
+        return self.ln() + self.fb() + self.rp() + self.oc()
 
-        all_formats = ("csv","json")
-        filename_path = os.getcwd() + "/out/"+filename+"."+format
-        #FIXME go to class in fhe future
-        if not os.path.exists(os.path.dirname(filename_path)):
-            try:
-                os.makedirs(os.path.dirname(filename_path))
-            except OSError as exc: # Guard against race condition
-                if exc.errno != errno.EEXIST:
-                    raise
-        
-        if format in all_formats:
-            if format == "csv":
-                keys = data[0].keys()
-                with open(filename_path, "w", newline="") as f:
-                    dict_writer = csv.DictWriter(f, keys)
-                    dict_writer.writeheader()
-                    dict_writer.writerows(data)
-            if format == "json":
-                with open(filename_path, 'w') as outfile:
-                    json.dump(data, outfile)
-
-        print("Exported: %s items" % str(len(data)))
