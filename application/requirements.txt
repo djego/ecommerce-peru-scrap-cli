@@ -6,3 +6,4 @@ soupsieve==2.0.1
 webencodings==0.5.1
 Flask==1.1.2
 requests==2.24.0
+Flask-SQLAlchemy==2.4.4

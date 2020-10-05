@@ -11,7 +11,11 @@ A list of products from some e-commerce websites more popular of Perú
 
 ## Development usage
 
-First install (Python3.7 o later)
+First go to `application` folder and install (Python3.7 o later) with virtualenv or pipenv
+
+`virtualenv env -p python3`
+
+Then install dependencies:
 
 ` pip install -r requirements.txt `
 
