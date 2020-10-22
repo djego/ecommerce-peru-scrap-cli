@@ -1,6 +1,7 @@
 import csv
 import re
 import os
+import json
 def price_to_float(x):
     rs = 0.0
     if x != None:

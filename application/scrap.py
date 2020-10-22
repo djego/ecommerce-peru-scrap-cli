@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from decimal import Decimal
 from re import sub
-from utils import *
+from utils import price_to_float
 
 lst_result = [] 
 
@@ -11,20 +11,9 @@ class Scraper:
     
     def __init__(self, category):
         self.category = category
-        self.all_resources = {
-            "laptop": {
-                "linio": "https://www.linio.com.pe/c/portatiles/laptops",
-                "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat40712/Laptops",
-                "ripley": "https://simple.ripley.com.pe/tecnologia/computadoras/laptops",
-                "oechsle": "https://www.oechsle.pe/tecnologia/computo/laptops",
-            },
-            "celular": {
-                "linio": "https://www.linio.com.pe/c/celulares-y-tablets/celulares-y-smartphones",
-                "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat760706/Celulares-y-Smartphones",
-                "ripley": "https://simple.ripley.com.pe/tecnologia/celulares/ver-todo-celulares",
-                "oechsle": "https://www.oechsle.pe/tecnologia/telefonia/celulares",
-            }
-        }  
+        with open('./ecommerces.json') as f:
+            data = json.load(f)
+        self.all_resources = data
 
     def ln(self): 
         req = requests.get(self.all_resources[self.category]["linio"])
@@ -93,11 +82,11 @@ class Scraper:
         req = requests.get(self.all_resources[self.category]["oechsle"])
         soup = BeautifulSoup(req.text, "lxml")
         lst_result = []    
-        items = soup.find("div", {"class":"vitrina"}).find_all("div",{"class": "product"})
+        items = soup.find("div", {"class":"main"}).find_all("div",{"class": "product"})
         for item in items:
             title = item.get("data-name")
             link = item.get("data-link")
-            price = item.get("data-product-price")
+            price = item.find("span", {"class": "BestPrice"}).text
             price_formated = price_to_float(price)
             lst_result.append({"title":title, "price": price_formated, "link": link})
         return lst_result

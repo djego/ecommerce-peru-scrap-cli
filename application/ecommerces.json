@@ -1,0 +1,14 @@
+{
+    "laptop": {
+        "linio": "https://www.linio.com.pe/c/portatiles/laptops",
+        "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat40712/Laptops",
+        "ripley": "https://simple.ripley.com.pe/tecnologia/computadoras/laptops",
+        "oechsle": "https://www.oechsle.pe/tecnologia/computo/laptops"
+    },
+    "celular": {
+        "linio": "https://www.linio.com.pe/c/celulares-y-tablets/celulares-y-smartphones",
+        "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat760706/Celulares-y-Smartphones",
+        "ripley": "https://simple.ripley.com.pe/tecnologia/celulares/ver-todo-celulares",
+        "oechsle": "https://www.oechsle.pe/tecnologia/telefonia/celulares"
+    }
+}
