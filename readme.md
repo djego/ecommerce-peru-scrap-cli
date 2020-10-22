@@ -7,22 +7,7 @@ Extract a list of products from some e-commerce websites more popular of Perú
 - Scraping ecommerces by product category (Only some categories)
 - Products export data in csv or json 
 
-## Development usage 
-
-First go to `application` folder and install (Python3.7 o later) with virtualenv or pipenv
-
-`virtualenv env -p python3`
-
-Then install dependencies:
-
-` pip install -r requirements.txt `
-
-For data scraping use CLI more info:
-
-`python cli.py -h` 
-
-
-## Production usage 
+## Production 
 
 For execute in production mode:
 
@@ -42,7 +27,24 @@ For more info
 
 `ecope -h` 
 
-## TO-DO
+
+## Development 
+
+### Local installing 
+
+First go to `application` folder and install (Python3.7 o later) with virtualenv or pipenv
+
+`virtualenv env -p python3`
+
+Then install dependencies:
+
+` pip install -r requirements.txt `
+
+For data scraping use CLI more info:
+
+`python cli.py -h` 
+
+## Todos
 * Add more ecommerces websites
 * paginate support 
 * Support docker
@@ -57,5 +59,7 @@ How to collaborate?
 * Add more items in `application/ecommerces.json` (You can with PR direct)
 
 
-## License
-[MIT](LICENCE.txt)
+
+License
+----
+MIT
