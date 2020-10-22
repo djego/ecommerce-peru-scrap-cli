@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ ! $@ ]]; then
+    cd application && python cli.py -h
+else
+    cd application && python cli.py $@
+fi
