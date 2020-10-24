@@ -6,7 +6,7 @@ ap = argparse.ArgumentParser(prog='cli-export',
                               usage='%(prog)s [options] path',)
 
 ap.add_argument("-c","--category", required=True, 
-   choices=["laptop","celular"], default="laptop", help="category to export")
+   choices=["laptop","celular","audifono","monitor"], default="laptop", help="category to export")
 
 ap.add_argument("-o", "--output", required=False,
    help="file to export data", default="out")

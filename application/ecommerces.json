@@ -10,5 +10,17 @@
         "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat760706/Celulares-y-Smartphones",
         "ripley": "https://simple.ripley.com.pe/tecnologia/celulares/ver-todo-celulares",
         "oechsle": "https://www.oechsle.pe/tecnologia/telefonia/celulares"
+    },
+    "audifono":{
+        "linio": "https://www.linio.com.pe/c/audio/audifonos",
+        "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat800582/Audifonos",
+        "ripley": "https://simple.ripley.com.pe/tecnologia/audifonos/todo-audifonos",
+        "oechsle": "https://www.oechsle.pe/tecnologia/audifonos"
+    },
+    "monitor":{
+        "linio": "https://www.linio.com.pe/search?scroll=&q=monitores&price=299-81698",
+        "falabella": "https://www.falabella.com.pe/falabella-pe/category/cat40695/Monitores",
+        "ripley": "https://simple.ripley.com.pe/tecnologia/computacion/monitores?source=menu",
+        "oechsle": "https://www.oechsle.pe/tecnologia/computo/monitores/"
     }
 }

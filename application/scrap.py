@@ -31,10 +31,11 @@ class Scraper:
         req = requests.get(self.all_resources[self.category]["falabella"])
         soup = BeautifulSoup(req.text, "lxml")
         lst_result = []
-        if self.category == 'celular':
-            items = soup.find("div",{"id": "testId-searchResults-products"}).find_all("div",{"class": "search-results-4-grid"})
-        else:
+        ##TODO this need to refactor  
+        if self.category == 'laptop':
             items = soup.find("div",{"id": "testId-searchResults-products"}).find_all("div",{"class": "search-results-list"})
+        else:
+            items = soup.find("div",{"id": "testId-searchResults-products"}).find_all("div",{"class": "search-results-4-grid"})
         for item in items:
             link  = item.find("a").get('href')
             title = item.find("b",{"class": "pod-subTitle"}).text
@@ -48,21 +49,7 @@ class Scraper:
         soup = BeautifulSoup(req.text, "lxml")
 
         lst_result = []
-        if self.category == 'celular':
-            items = soup.find("div",{"class": "catalog-container"}).find_all("a",{"class": "catalog-product-item"})
-            for item in items:
-                title = item.find("div",{"class": "catalog-product-details__name"}).text
-                link =  item.get("href")
-                price_el = item.find("li",{"class": "catalog-prices__offer-price"})
-                price2_el  = item.find("li",{"class": "catalog-prices__list-price"})
-                price = price_el.text if price_el != None else None
-                if price == '':
-                    price = price2_el.text if price2_el != None else None
-                price_formated = price_to_float(price)
-                link_trans = 'https://simple.ripley.com.pe'+link
-                lst_result.append({"title":title, "price": price_formated, "link": link_trans})
-
-        else:
+        if self.category == 'laptop':
             items = soup.find("div",{"id": "catalog-page"}).find_all("div",{"class": "ProductItem"})
             for item in items:
                 title = item.find("a",{"class":"ProductItem__Name"}).text
@@ -73,6 +60,19 @@ class Scraper:
                 if price == '':
                     price = price2_el.text if price2_el != None else None
                 
+                price_formated = price_to_float(price)
+                link_trans = 'https://simple.ripley.com.pe'+link
+                lst_result.append({"title":title, "price": price_formated, "link": link_trans})
+        else:
+            items = soup.find("div",{"class": "catalog-container"}).find_all("a",{"class": "catalog-product-item"})
+            for item in items:
+                title = item.find("div",{"class": "catalog-product-details__name"}).text
+                link =  item.get("href")
+                price_el = item.find("li",{"class": "catalog-prices__offer-price"})
+                price2_el  = item.find("li",{"class": "catalog-prices__list-price"})
+                price = price_el.text if price_el != None else None
+                if price == '':
+                    price = price2_el.text if price2_el != None else None
                 price_formated = price_to_float(price)
                 link_trans = 'https://simple.ripley.com.pe'+link
                 lst_result.append({"title":title, "price": price_formated, "link": link_trans})
