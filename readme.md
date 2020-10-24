@@ -1,3 +1,4 @@
+[![PyPI version](https://badge.fury.io/py/ecope.svg)](https://badge.fury.io/py/ecope)
 # Ecommerce Perú Scrap CLI
 > I'm already tired of the GUIs
 
@@ -9,9 +10,9 @@ Extract a list of products from some e-commerce websites more popular of Perú
 
 ## Production 
 
-For execute in production mode:
+Before you need Python 3.7 or more, then install ecope with pip
 
-`python setup.py install`
+`pip install ecope`
 
 Then you can usage this command `ecope` CLI :) 
 
